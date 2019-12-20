@@ -10,7 +10,7 @@ class App extends Component {
                 <div>
                     <AppNavbar></AppNavbar>
                 </div>
-                <div class="timeline">
+                <div className="timeline">
                     <Timeline></Timeline>
                 </div>
             </div>
