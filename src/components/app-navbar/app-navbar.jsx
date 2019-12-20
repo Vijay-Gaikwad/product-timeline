@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
-import cart from 'cart.png'
 
 class AppNavbar extends Component {
     constructor(props) {
@@ -22,7 +21,7 @@ class AppNavbar extends Component {
                     </Nav>
                     <Nav className="ml-auto">
                         <img
-                            src={cart}
+                            src="../../assets/images/cart.png"
                             width="30"
                             height="30"
                             className="d-inline-block align-top"
