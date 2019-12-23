@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AppNavbar from './app-navbar/app-navbar';
+import AppNavbar from './common/app-navbar/app-navbar';
 import Timeline from './timeline/timeline';
 import './app.css';
 

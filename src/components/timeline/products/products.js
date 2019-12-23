@@ -25,8 +25,7 @@ class Products extends Component {
   }
 
   handleButton(e) {
-    const products = localStorage.getItem("productsStorage");
-    console.log("products", JSON.parse(products));
+    localStorage.getItem("productsStorage");
     if (e.target.name === 'plus') {
       this.setState({
         quantity
