@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import withContext from '../contextAPI/contextHOC'
 import './timeline.css';
 import Products from './products';
 import productsConstant from "../../constants/constant.json"
@@ -12,6 +13,11 @@ class Timeline extends Component {
             disabled: true
         }
     }
+
+    componentDidMount() {
+        console.log(this.props);
+    }
+    
 
     handleProductQuantity(changedProduct) {
         console.log(changedProduct);
@@ -55,4 +61,4 @@ class Timeline extends Component {
     }
 }
 
-export default Timeline;
+export default withContext(Timeline);
