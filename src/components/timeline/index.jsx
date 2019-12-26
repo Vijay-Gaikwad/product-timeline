@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import withContext from '../contextAPI/contextHOC'
-import './timeline.css';
+import './index.css';
 import Products from './products';
 import productsConstant from "../../constants/constant.json"
 
@@ -14,13 +14,7 @@ class Timeline extends Component {
         }
     }
 
-    componentDidMount() {
-        console.log(this.props);
-    }
-    
-
     handleProductQuantity(changedProduct) {
-        console.log(changedProduct);
         this.setState({
             products: Object.assign(
                 [],
@@ -28,6 +22,7 @@ class Timeline extends Component {
                 { changedProduct }
             )
         });
+        localStorage.setItem('products', JSON.stringify(this.state.products));
     }
 
     render() {
@@ -56,7 +51,6 @@ class Timeline extends Component {
                     })
                 }
             </div>
-
         )
     }
 }
