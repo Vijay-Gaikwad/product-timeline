@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table } from 'react-bootstrap';
+import { Table, ButtonToolbar, Button } from 'react-bootstrap';
 import './index.css'
 import _ from 'lodash';
 
@@ -7,13 +7,19 @@ class Cart extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            cart: {}
+            cart: {},
+            checkoutButton: false
         }
     }
     async componentDidMount() {
         const productStorage = JSON.parse(localStorage.getItem("products"));
         await _.findChangedQuantity(productStorage);
         this.setState({ cart: JSON.parse(localStorage.getItem("cart")) });
+        const quantity = await _.totalQuantity(this.state.cart);
+        console.log(quantity);
+        if (quantity%12 === 0) {
+            this.setState({ checkoutButton: true });
+        }
     }
 
     render() {
@@ -51,7 +57,13 @@ class Cart extends Component {
                     })
 
                 }
+                <div className="checkoutButton">
+                    <ButtonToolbar>
+                        <Button variant="warning" disabled={this.state.checkoutButton}>Checkout</Button>
+                    </ButtonToolbar>
+                </div>
             </div>
+
         );
     }
 }

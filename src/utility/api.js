@@ -26,7 +26,7 @@ _.mixin({
                     if (item.quantity > 0) {
                         products.push(item);
                         cart.push({ "year": element.year, "products": products })
-                        const cart1 = _.uniqBy(cart,"year");
+                        const cart1 = _.uniqBy(cart, "year");
                         localStorage.setItem("cart", JSON.stringify(cart1));
                     }
                     return true;
@@ -34,5 +34,16 @@ _.mixin({
                 return true;
             });
         }
+    },
+
+    totalQuantity: (products) => {
+        let quantity = 0
+        _.map(products, (item) => {
+            const totalQuantity = _.sumBy(item.products, (product) => {
+                return product.quantity++;
+            })
+            quantity = totalQuantity + quantity
+        });
+        return quantity;
     }
 })

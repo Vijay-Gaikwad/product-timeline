@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
+import { ButtonToolbar, Button } from 'react-bootstrap';
 import withContext from '../contextAPI/contextHOC'
 import './index.css';
-import Products from './products';
-import productsConstant from "../../constants/constant.json"
+import Products from './products/index';
+import AddProduct from './add-product/index';
+import productsConstant from "../../constants/products.json"
 
 class Timeline extends Component {
     constructor(props) {
         super(props);
         this.handleProductQuantity = this.handleProductQuantity.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+        this.handleShow = this.handleShow.bind(this);
+
         this.state = {
             products: productsConstant.products,
-            disabled: true
+            disabled: true,
+            show: false,
         }
     }
 
@@ -25,9 +31,21 @@ class Timeline extends Component {
         localStorage.setItem('products', JSON.stringify(this.state.products));
     }
 
+    handleClose = () => {
+        this.setState({ show: false });
+    }
+
+    handleShow = () => {
+        this.setState({ show: true });
+    }
+
     render() {
         return (
+
             <div className="timeline">
+                <ButtonToolbar className="addButton">
+                    <Button variant="primary" onClick={this.handleShow}>Add</Button>
+                </ButtonToolbar>
                 {
                     this.state.products.map((key, value) => {
                         return (
@@ -50,6 +68,10 @@ class Timeline extends Component {
                         );
                     })
                 }
+
+                <div>
+                <AddProduct show={this.state.show} handleClose={this.handleClose}></AddProduct>
+                </div>
             </div>
         )
     }
