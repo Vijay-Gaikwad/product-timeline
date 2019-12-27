@@ -19,18 +19,20 @@ _.mixin({
          */
     findChangedQuantity: (products) => {
         let cart = [];
-         products.forEach(element => {
-            let products = [];
-             element.products.forEach(item => {
-                 const a = _.some(cart,{"year":element.year});
-                if (item.quantity > 0) {
-                    products.push(item);
-                    cart.push({ "year": element.year, "products": products })
-                    localStorage.setItem("cart", JSON.stringify(cart));
-                }
+        if (products) {
+            products.forEach(element => {
+                let products = [];
+                element.products.forEach(item => {
+                    if (item.quantity > 0) {
+                        products.push(item);
+                        cart.push({ "year": element.year, "products": products })
+                        const cart1 = _.uniqBy(cart,"year");
+                        localStorage.setItem("cart", JSON.stringify(cart1));
+                    }
+                    return true;
+                });
                 return true;
             });
-            return true;
-        });
+        }
     }
 })
