@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
+import _ from 'lodash';
 import './index.css';
 
 const AddProduct = (props) => {
-  const  handleForm = () =>{
-alert("saved")
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [year, setYear] = useState(0);
+    const [error, setError] = useState(false)
+    const handleForm = () => {
+        props.handleClose();
+        _.addProduct(props.products, "pikapi", "pikaaaachuuuuu", 2001)
+    }
+    const inputChangeHandler = (e) => {
+        console.log(e);
     }
     return (<div>
         <Modal show={props.show} onHide={props.handleClose}>
@@ -15,30 +24,25 @@ alert("saved")
                 <Form>
                     <Form.Group controlId="formProduct">
                         <Form.Label>Product Title</Form.Label>
-                        <Form.Control type="text" placeholder="Enter product title" />
+                        <Form.Control type="text" placeholder="Enter product title" value={setTitle} onChange={inputChangeHandler} />
                         <Form.Text className=" error">
                             Error
                         </Form.Text>
                     </Form.Group>
                     <Form.Group controlId="formDescription">
                         <Form.Label>Description</Form.Label>
-                        <Form.Control type="text" placeholder="Enter product description" />
+                        <Form.Control type="text" placeholder="Enter product description" value={setDescription} onChange={inputChangeHandler} />
                         <Form.Text className=" error">
                             Error
                         </Form.Text>
                     </Form.Group>
                     <Form.Group controlId="formYear">
-                        <Form.Control as="select">
-                            <option>2001</option>
-                            <option>2002</option>
-                            <option>2003</option>
-                            <option>2004</option>
-                            <option>2005</option>
-                            <option>2006</option>
-                            <option>2007</option>
-                            <option>2008</option>
-                            <option>2009</option>
-                            <option>2010</option>
+                        <Form.Control as="select" value={setYear} onChange={inputChangeHandler}>
+                            {props.products.map((item, id) => {
+                                return (<option key={id}>{item.year}</option>
+                                )
+                            })
+                            }
                         </Form.Control>
                     </Form.Group>
                     <Button variant="primary" onClick={handleForm}>
