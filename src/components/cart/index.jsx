@@ -8,7 +8,7 @@ class Cart extends Component {
         super(props);
         this.state = {
             cart: {},
-            checkoutButton: false
+            checkoutButton: true
         }
     }
     async componentDidMount() {
@@ -16,14 +16,16 @@ class Cart extends Component {
         await _.findChangedQuantity(productStorage);
         this.setState({ cart: JSON.parse(localStorage.getItem("cart")) });
         const quantity = await _.totalQuantity(this.state.cart);
-        console.log(quantity);
-        if (quantity%12 === 0) {
-            this.setState({ checkoutButton: true });
-        }
+        setTimeout(() => {
+            if (quantity % 12 == 0) {
+                this.setState({ checkoutButton: false });
+            }
+        }, 1000);
     }
 
+
+
     render() {
-        console.log(this.state.cart);
         return (
             <div className="cart">
                 <h1>Product Cart</h1>

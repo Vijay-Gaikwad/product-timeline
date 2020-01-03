@@ -62,10 +62,10 @@ _.mixin({
             "image": "",
             desc,
             year, "quantity": 0
-        }
-        if (products) {
+        };
+        if (!_.isUndefined(products) || products) {
             const product = _.findIndex(products, { year });
-            if(products[product].products.length<4){
+            if(products[product].products && products[product].products.length<4){
                 products[product].products.push(newProduct);
                 localStorage.setItem("products", products);
                 return true;

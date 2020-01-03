@@ -2,19 +2,26 @@ import React, { useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import _ from 'lodash';
 import './index.css';
+import { number } from 'prop-types';
 
 const AddProduct = (props) => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [year, setYear] = useState(0);
-    const [error, setError] = useState(false)
+    const [year, setYear] = useState(2001);
+    const [titleError, setTitleError] = useState(false);
+    const [descriptionError, setDescriptionError] = useState(false)
+
     const handleForm = () => {
+        _.addProduct(props.products, title, description, year);
         props.handleClose();
-        _.addProduct(props.products, "pikapi", "pikaaaachuuuuu", 2001)
     }
-    const inputChangeHandler = (e) => {
-        console.log(e);
+
+    const handleError = (input) => {
+        if (input === "Title") {
+            setTitleError(true);
+        }
     }
+
     return (<div>
         <Modal show={props.show} onHide={props.handleClose}>
             <Modal.Header closeButton>
@@ -24,22 +31,26 @@ const AddProduct = (props) => {
                 <Form>
                     <Form.Group controlId="formProduct">
                         <Form.Label>Product Title</Form.Label>
-                        <Form.Control type="text" placeholder="Enter product title" value={setTitle} onChange={inputChangeHandler} />
-                        <Form.Text className=" error">
-                            Error
+                        <Form.Control type="text" placeholder="Enter product title" name="Title" value={title}  onChange={e => {setTitle(e.target.value); handleError("Title")}} />
+                        {titleError &&
+                            <Form.Text className=" error">
+                                titleError
                         </Form.Text>
+                        }
                     </Form.Group>
                     <Form.Group controlId="formDescription">
                         <Form.Label>Description</Form.Label>
-                        <Form.Control type="text" placeholder="Enter product description" value={setDescription} onChange={inputChangeHandler} />
-                        <Form.Text className=" error">
-                            Error
+                        <Form.Control type="text" placeholder="Enter product description" name="Description"  value={description} onChange={e => setDescription(e.target.value)} />
+                        {descriptionError &&
+                            <Form.Text className=" error">
+                                Error
                         </Form.Text>
+                        }
                     </Form.Group>
                     <Form.Group controlId="formYear">
-                        <Form.Control as="select" value={setYear} onChange={inputChangeHandler}>
+                        <Form.Control as="select" value={year} name="Year" onChange={e => setYear(Number(e.target.value))}>
                             {props.products.map((item, id) => {
-                                return (<option key={id}>{item.year}</option>
+                                return (<option value={item.year} key={id}>{item.year}</option>
                                 )
                             })
                             }

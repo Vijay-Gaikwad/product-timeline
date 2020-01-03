@@ -70,7 +70,7 @@ class Timeline extends Component {
                 }
 
                 <div>
-                <AddProduct show={this.state.show} handleClose={this.handleClose} products={this.state.products}></AddProduct>
+                    <AddProduct show={this.state.show} handleClose={this.handleClose} products={this.state.products}></AddProduct>
                 </div>
             </div>
         )
