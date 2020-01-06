@@ -1,26 +1,27 @@
 import React, { Component } from 'react';
-import { Table, ButtonToolbar, Button } from 'react-bootstrap';
+import { Table, ButtonToolbar, Button, InputGroup } from 'react-bootstrap';
 import './index.css'
 import _ from 'lodash';
+import { any } from 'prop-types';
 
 class Cart extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            cart: {},
+            cart: Object,
             checkoutButton: true
         }
     }
     async componentDidMount() {
         const productStorage = JSON.parse(localStorage.getItem("products"));
         await _.findChangedQuantity(productStorage);
-        this.setState({ cart: JSON.parse(localStorage.getItem("cart")) });
-        const quantity = await _.totalQuantity(this.state.cart);
-        setTimeout(() => {
-            if (quantity % 12 == 0) {
-                this.setState({ checkoutButton: false });
-            }
-        }, 1000);
+        const cart = JSON.parse(localStorage.getItem("cart"));
+        const quantity = await _.totalQuantity(cart);
+        if (_.isEqual(quantity, 0)) {
+            this.setState({ cart, checkoutButton: false });
+        } else {
+            this.setState({ cart, checkoutButton: true });
+        }
     }
 
 
@@ -42,12 +43,14 @@ class Cart extends Component {
                                     </thead>
                                     {
                                         item.products.map((item, id) => {
+                                            console.log(item);
                                             return (
                                                 <Table key={id}
                                                 ><tbody >
                                                         <tr>
                                                             <td>{item.title}</td>
-                                                            <td>{`x ${item.quantity}`}</td>
+                                                            <td>X <InputGroup>      <InputGroup.Text id="inputGroup-sizing-sm">Small</InputGroup.Text>
+                                                            </InputGroup></td>
                                                         </tr>
                                                     </tbody>
                                                 </Table>

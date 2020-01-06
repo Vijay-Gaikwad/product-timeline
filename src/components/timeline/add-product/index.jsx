@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import _ from 'lodash';
 import './index.css';
-import { number } from 'prop-types';
 
 const AddProduct = (props) => {
     const [title, setTitle] = useState("");
@@ -18,7 +17,9 @@ const AddProduct = (props) => {
 
     const handleError = (input) => {
         if (input === "Title") {
-            setTitleError(true);
+            if (!_.isEmpty(title)) {
+                //  setTitleError(true);
+            }
         }
     }
 
@@ -31,16 +32,16 @@ const AddProduct = (props) => {
                 <Form>
                     <Form.Group controlId="formProduct">
                         <Form.Label>Product Title</Form.Label>
-                        <Form.Control type="text" placeholder="Enter product title" name="Title" value={title}  onChange={e => {setTitle(e.target.value); handleError("Title")}} />
+                        <Form.Control type="text" placeholder="Enter product title" name="Title" value={title} onChange={e => { setTitle(e.target.value); handleError("Title") }} />
                         {titleError &&
                             <Form.Text className=" error">
-                                titleError
+                                Error while enter title.
                         </Form.Text>
                         }
                     </Form.Group>
                     <Form.Group controlId="formDescription">
                         <Form.Label>Description</Form.Label>
-                        <Form.Control type="text" placeholder="Enter product description" name="Description"  value={description} onChange={e => setDescription(e.target.value)} />
+                        <Form.Control type="text" placeholder="Enter product description" name="Description" value={description} onChange={e => setDescription(e.target.value)} />
                         {descriptionError &&
                             <Form.Text className=" error">
                                 Error

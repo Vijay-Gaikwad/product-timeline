@@ -3,11 +3,16 @@ import { Link } from 'react-router-dom'
 import { Navbar, Nav } from 'react-bootstrap';
 import cart from "../../../assets/images/cart.png"; // Tell Webpack this JS file uses this image
 import logo from '../../../assets/images/logo.png'
+import CartToolbar from './cart-toolbar';
+import './index.css'
 
 class AppNavbar extends Component {
     constructor(props) {
         super(props);
         this.state = {}
+    }
+    showCart = () => {
+        return <CartToolbar></CartToolbar>
     }
     render() {
         return (
@@ -26,17 +31,21 @@ class AppNavbar extends Component {
                 </Navbar>
                 <Navbar bg="light">
                     <Nav className="mr-auto">
-                        <Link to='/timeline'>Timeline</Link>&nbsp;&nbsp; 
+                        <Link to='/timeline'>Timeline</Link>&nbsp;&nbsp;
                         <Link to='/cart'>Cart</Link>
                     </Nav>
                     <Nav className="ml-auto">
-                        <img
-                            src={cart}
-                            width="30"
-                            height="30"
-                            className="d-inline-block align-top"
-                            alt="cart logo"
-                        />
+                        <span className="notification">
+                            <img
+                                src={cart}
+                                width="30"
+                                height="30"
+                                className="d-inline-block align-top"
+                                alt="cart logo"
+                                onClick={this.showCart}
+                            />
+                            <span className="badge">3</span>
+                        </span>
                     </Nav>
                 </Navbar>
             </div>
