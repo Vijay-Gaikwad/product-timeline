@@ -49,7 +49,7 @@ _.mixin({
             })
             quantity = totalQuantity + quantity
         });
-        return quantity % 12;
+        return quantity;
     },
 
     /**

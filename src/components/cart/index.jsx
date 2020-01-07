@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Table, ButtonToolbar, Button, InputGroup } from 'react-bootstrap';
+import { Table, ButtonToolbar, Button, InputGroup, FormControl } from 'react-bootstrap';
 import './index.css'
 import _ from 'lodash';
-import { any } from 'prop-types';
 
 class Cart extends Component {
     constructor(props) {
@@ -17,14 +16,13 @@ class Cart extends Component {
         await _.findChangedQuantity(productStorage);
         const cart = JSON.parse(localStorage.getItem("cart"));
         const quantity = await _.totalQuantity(cart);
-        if (_.isEqual(quantity, 0)) {
+        console.log(quantity);
+        if (_.isEqual(quantity%12, 0)) {
             this.setState({ cart, checkoutButton: false });
         } else {
             this.setState({ cart, checkoutButton: true });
         }
     }
-
-
 
     render() {
         return (
@@ -43,13 +41,13 @@ class Cart extends Component {
                                     </thead>
                                     {
                                         item.products.map((item, id) => {
-                                            console.log(item);
                                             return (
                                                 <Table key={id}
                                                 ><tbody >
                                                         <tr>
                                                             <td>{item.title}</td>
-                                                            <td>X <InputGroup>      <InputGroup.Text id="inputGroup-sizing-sm">Small</InputGroup.Text>
+                                                            <td> <InputGroup className="quantity">  X &nbsp;  <FormControl aria-label="Small" aria-describedby="inputGroup-sizing-sm" value={item.quantity}/>
+
                                                             </InputGroup></td>
                                                         </tr>
                                                     </tbody>

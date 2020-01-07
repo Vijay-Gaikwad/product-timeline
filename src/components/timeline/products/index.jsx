@@ -4,7 +4,6 @@ import productImage from "../../../assets/images/placeholder-product.png"; // Te
 import { ButtonToolbar, Button, InputGroup, FormControl } from 'react-bootstrap';
 import _ from 'lodash';
 
-
 function Products(props) {
   const handleButton = (event, id, operatorFlag) => {
       const changedProduct = _.changeProductsQuantity(id, props.products, operatorFlag);

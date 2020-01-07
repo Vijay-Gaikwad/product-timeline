@@ -29,6 +29,7 @@ class Timeline extends Component {
             )
         });
         localStorage.setItem('products', JSON.stringify(this.state.products));
+        this.props.getProducts();
     }
 
     handleClose = () => {

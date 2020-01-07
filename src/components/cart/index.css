@@ -10,3 +10,7 @@ h1 {
 .checkoutButton {
     float: right;
 }
+
+.quantity {
+    width: 10%;
+}

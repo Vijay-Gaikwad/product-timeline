@@ -1,34 +1,23 @@
-import React, {useState, useRef} from 'react';
-import {ButtonToolbar, Overlay, Popover, Button} from 'react-bootstrap';
+import React from 'react';
+import { Overlay, Popover} from 'react-bootstrap';
+import './index.css'
 
 function CartToolbar(props) {
-    const [show, setShow] = useState(false);
-    const [target, setTarget] = useState(null);
-    const ref = useRef(null);
-  
-    const handleClick = event => {
-      setShow(!show);
-      setTarget(event.target);
-    };
-  
     return (
-      <ButtonToolbar ref={ref}>
-        <Button onClick={handleClick}>Holy guacamole!</Button>
-  
         <Overlay
-          show={true}
+          show={props.show}
           placement="bottom"
-          container={ref.current}
+          trigger="click"
+          target={props.target}
           containerPadding={20}
         >
-          <Popover id="popover-contained">
-            <Popover.Title as="h3">Popover bottom</Popover.Title>
+          <Popover className="overlay" id="popover-contained">
+            <Popover.Title as="h3">Cart</Popover.Title>
             <Popover.Content>
-              <strong>Holy guacamole!</strong> Check this info.
+              <strong>Here is cart and here all ui html I will add</strong>
             </Popover.Content>
           </Popover>
         </Overlay>
-      </ButtonToolbar>
     );
   }
   

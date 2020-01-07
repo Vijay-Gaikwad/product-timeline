@@ -1,0 +1,7 @@
+.overlay {
+    transform: translate3d(900px, 115px, 0px) !important;
+}
+
+.arrow {
+    left: 245px !important;
+}

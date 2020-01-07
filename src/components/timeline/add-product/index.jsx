@@ -15,12 +15,13 @@ const AddProduct = (props) => {
         props.handleClose();
     }
 
-    const handleError = (input) => {
-        if (input === "Title") {
-            if (!_.isEmpty(title)) {
-                //  setTitleError(true);
-            }
-        }
+    const handleError = (e, input) => {
+        // var letters = /^[A-Za-z]+$/;
+        // if (input === "Title" || !letters.test(title)) {
+        //     setTitleError(true);
+        // }else{
+        //     setTitleError(false);
+        // }
     }
 
     return (<div>
@@ -32,7 +33,7 @@ const AddProduct = (props) => {
                 <Form>
                     <Form.Group controlId="formProduct">
                         <Form.Label>Product Title</Form.Label>
-                        <Form.Control type="text" placeholder="Enter product title" name="Title" value={title} onChange={e => { setTitle(e.target.value); handleError("Title") }} />
+                        <Form.Control type="text" placeholder="Enter product title" name="Title" value={title} onChange={e => { setTitle(e.target.value); handleError(e, "Title") }} />
                         {titleError &&
                             <Form.Text className=" error">
                                 Error while enter title.

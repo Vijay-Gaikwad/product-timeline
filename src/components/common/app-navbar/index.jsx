@@ -9,11 +9,16 @@ import './index.css'
 class AppNavbar extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            showCart: false,
+            target: {}
+        }
     }
-    showCart = () => {
-        return <CartToolbar></CartToolbar>
-    }
+
+    handleClick = event => {
+        this.setState({ showCart: !this.state.showCart, target: event.target });
+    };
+
     render() {
         return (
             <div>
@@ -42,11 +47,14 @@ class AppNavbar extends Component {
                                 height="30"
                                 className="d-inline-block align-top"
                                 alt="cart logo"
-                                onClick={this.showCart}
+                                onClick={this.handleClick}
                             />
-                            <span className="badge">3</span>
+                            <span className="badge">{this.props.quantity}</span>
                         </span>
                     </Nav>
+                    <div>
+                        {this.state.showCart && <CartToolbar show={this.state.showCart} targer={this.state.target} products={this.props.products}></CartToolbar>}
+                    </div>
                 </Navbar>
             </div>
         );
