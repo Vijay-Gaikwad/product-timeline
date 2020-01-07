@@ -53,7 +53,7 @@ class AppNavbar extends Component {
                         </span>
                     </Nav>
                     <div>
-                        {this.state.showCart && <CartToolbar show={this.state.showCart} targer={this.state.target} products={this.props.products}></CartToolbar>}
+                        {this.state.showCart && <CartToolbar show={this.state.showCart} targer={this.state.target} products={this.props.cart}></CartToolbar>}
                     </div>
                 </Navbar>
             </div>
