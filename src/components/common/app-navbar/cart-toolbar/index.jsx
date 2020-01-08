@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Overlay, Popover, Table, ButtonToolbar, Button, InputGroup, FormControl } from 'react-bootstrap';
+import { Overlay, Popover, Table} from 'react-bootstrap';
 import _ from 'lodash';
 import './index.css'
 
 function CartToolbar(props) {
     const [cart, setCart] = useState({})
-    useEffect(async () => {
-        const productStorage = JSON.parse(localStorage.getItem("products"));
-        await _.findChangedQuantity(productStorage);
+
+   const getCart = async (products) => {
+        await _.findChangedQuantity(products);
         setCart(JSON.parse(localStorage.getItem("cart")));
+    }
+
+    useEffect( () => {
+        const productStorage = JSON.parse(localStorage.getItem("products"));
+        getCart(productStorage)
     }, []);
+    
     return (
         <Overlay
             show={props.show}
