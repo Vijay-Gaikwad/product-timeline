@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+
 import { Table, ButtonToolbar, Button, InputGroup, FormControl } from 'react-bootstrap';
 import _ from 'lodash';
 import './index.css'
@@ -24,6 +26,7 @@ class Cart extends Component {
     }
     inputChangeHandler = async (e, item, year) => {
         const cart = JSON.parse(localStorage.getItem("cart"));
+        console.log("cart", cart);
         if (cart || e.target.value || item) {
             const yearIndex = _.findIndex(cart, { year });
             const index = _.findIndex(cart[yearIndex].products, { "title": item.title });
@@ -37,11 +40,20 @@ class Cart extends Component {
             }
             localStorage.setItem('cart', JSON.stringify(this.state.cart));
         }
+        // this.props.getProducts(true);
     }
+
+    checkoutProducts = () => {
+        this.setState({ cart: {} });
+        localStorage.clear();
+        alert("Order Placed");
+        return <Redirect to='/' />
+    }
+
     render() {
         return (
             <div className="cart">
-                <h1>Product Cart</h1>
+
                 {
                     !_.isEmpty(this.state.cart) &&
                     this.state.cart.map((product, id) => {
@@ -61,7 +73,7 @@ class Cart extends Component {
                                                         <td>{item.title}</td>
                                                         <td>
                                                             <InputGroup className="quantity">
-                                                                x &nbsp;  <FormControl type="number" aria-label="Small" aria-describedby="inputGroup-sizing-sm" defaultValue={item.quantity} onChange={e => { this.inputChangeHandler(e, item, product.year) }} />
+                                                                x &nbsp;  <FormControl type="number" aria-label="Small" aria-describedby="inputGroup-sizing-sm" defaultValue={parseInt(item.quantity)} onChange={e => { this.inputChangeHandler(e, item, product.year) }} />
                                                             </InputGroup></td>
                                                     </tr>
                                                 </tbody>
@@ -69,15 +81,18 @@ class Cart extends Component {
                                         })
                                     }
                                 </Table>
-                            </div>)
-                    })
 
-                }
+                            </div>
+                        )
+                    })}
+
                 <div className="checkoutButton">
                     <ButtonToolbar>
-                        <Button variant="warning" disabled={this.state.checkoutButton}>Checkout</Button>
+                        <Button variant="warning" disabled={this.state.checkoutButton} onClick={this.checkoutProducts}>Checkout</Button>
                     </ButtonToolbar>
                 </div>
+
+
             </div>
 
         );

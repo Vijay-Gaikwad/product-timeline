@@ -29,7 +29,7 @@ function CartToolbar(props) {
                 <Popover.Content>
                     <div className="cart">
                         {
-                            !_.isEmpty(cart) &&
+                            !_.isEmpty(cart) ?
                             cart.map((product, id) => {
                                 return (
                                     <div key={id}>
@@ -53,7 +53,7 @@ function CartToolbar(props) {
                                             }
                                         </Table>
                                     </div>)
-                            })
+                            }):<h5>Empty cart</h5>
                         }
                     </div>
                 </Popover.Content>
