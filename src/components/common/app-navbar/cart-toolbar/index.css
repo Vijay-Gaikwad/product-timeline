@@ -1,7 +1,8 @@
 .overlay {
-    transform: translate3d(980px, 115px, 0px) !important;
+    transform: translate3d(959px, 115px, 0px) !important;
+    width:18% !important;
 }
 
 .arrow {
-    left: 130px !important;
+    left: 185px !important;
 }

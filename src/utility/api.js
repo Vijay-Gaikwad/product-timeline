@@ -45,7 +45,7 @@ _.mixin({
         let quantity = 0
         _.map(products, (item) => {
             const totalQuantity = _.sumBy(item.products, (product) => {
-                return product.quantity++;
+                return product.quantity;
             })
             quantity = totalQuantity + quantity
         });

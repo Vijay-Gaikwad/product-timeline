@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Overlay, Popover, Table} from 'react-bootstrap';
+import { Overlay, Popover, Table } from 'react-bootstrap';
 import _ from 'lodash';
 import './index.css'
 
 function CartToolbar(props) {
     const [cart, setCart] = useState({})
 
-   const getCart = async (products) => {
+    const getCart = async (products) => {
         await _.findChangedQuantity(products);
         setCart(JSON.parse(localStorage.getItem("cart")));
     }
 
-    useEffect( () => {
+    useEffect(() => {
         const productStorage = JSON.parse(localStorage.getItem("products"));
         getCart(productStorage)
     }, []);
-    
+
     return (
         <Overlay
             show={props.show}
@@ -31,7 +31,6 @@ function CartToolbar(props) {
                         {
                             !_.isEmpty(cart) &&
                             cart.map((product, id) => {
-                                console.log(product)
                                 return (
                                     <div key={id}>
                                         <Table striped bordered hover variant='light'>
@@ -43,14 +42,12 @@ function CartToolbar(props) {
                                             {
                                                 product.products.map((item, id) => {
                                                     return (
-                                                        <Table key={id}
-                                                        ><tbody >
-                                                                <tr>
-                                                                    <td>{item.title}</td>
-                                                                    <td>x {item.quantity}</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </Table>
+                                                        <tbody key={id}>
+                                                            <tr>
+                                                                <td>{item.title}</td>
+                                                                <td>x {item.quantity}</td>
+                                                            </tr>
+                                                        </tbody>
                                                     )
                                                 })
                                             }

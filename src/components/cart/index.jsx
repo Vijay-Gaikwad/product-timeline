@@ -16,25 +16,26 @@ class Cart extends Component {
         await _.findChangedQuantity(productStorage);
         const cart = JSON.parse(localStorage.getItem("cart"));
         const quantity = await _.totalQuantity(cart);
-        console.log(quantity);
-        if (_.isEqual(quantity%12, 0)) {
+        if (_.isEqual(quantity % 12, 0)) {
             this.setState({ cart, checkoutButton: false });
         } else {
             this.setState({ cart, checkoutButton: true });
         }
     }
-    inputChangeHandler = (e, item) => {
-        if(e.target.value || item){
-            const products = JSON.parse(localStorage.getItem("cart"));
-            console.log(products);
-
-            const index = _.findIndex(products, {year:item.year});
-            console.log(index);
-            products.splice(index, 1, item);
-            // localStorage.setItem('products', JSON.stringify(this.state.products));
-            // this.props.getProducts();
-console.log(products);
-console.log(item);
+    inputChangeHandler = async (e, item, year) => {
+        const cart = JSON.parse(localStorage.getItem("cart"));
+        if (cart || e.target.value || item) {
+            const yearIndex = _.findIndex(cart, { year });
+            const index = _.findIndex(cart[yearIndex].products, { "title": item.title });
+            item.quantity = parseInt(e.target.value);
+            cart[yearIndex].products[index] = item;
+            const quantity = await _.totalQuantity(cart);
+            if (_.isEqual(quantity % 12, 0)) {
+                this.setState({ cart, checkoutButton: false });
+            } else {
+                this.setState({ cart, checkoutButton: true });
+            }
+            localStorage.setItem('cart', JSON.stringify(this.state.cart));
         }
     }
     render() {
@@ -55,17 +56,15 @@ console.log(item);
                                     {
                                         product.products.map((item, id) => {
                                             return (
-                                                <Table key={id}
-                                                ><tbody >
-                                                        <tr>
-                                                            <td>{item.title}</td>
-                                                            <td>
-                                                                 <InputGroup className="quantity"> 
-                                                                  x &nbsp;  <FormControl aria-label="Small" aria-describedby="inputGroup-sizing-sm" defaultValue={item.quantity} onChange={e => {this.inputChangeHandler(e, item)}}/>
-                                                                 </InputGroup></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </Table>
+                                                <tbody key={id} >
+                                                    <tr>
+                                                        <td>{item.title}</td>
+                                                        <td>
+                                                            <InputGroup className="quantity">
+                                                                x &nbsp;  <FormControl type="number" aria-label="Small" aria-describedby="inputGroup-sizing-sm" defaultValue={item.quantity} onChange={e => { this.inputChangeHandler(e, item, product.year) }} />
+                                                            </InputGroup></td>
+                                                    </tr>
+                                                </tbody>
                                             )
                                         })
                                     }

@@ -20,6 +20,10 @@ class Timeline extends Component {
         }
     }
 
+    componentDidMount() {
+        localStorage.removeItem("cart");
+    }
+
     handleProductQuantity(changedProduct) {
         this.setState({
             products: Object.assign(

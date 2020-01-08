@@ -15,10 +15,15 @@ class App extends Component {
         }
     }
 
-    getProducts = () => {
+    getProducts = async (flag=false) => {
+        let quantity = 0;
         const products = JSON.parse(localStorage.getItem("products"));
         const cart = JSON.parse(localStorage.getItem("cart"));
-        const quantity =  _.totalQuantity(products)
+        if(flag){
+             quantity = await _.totalQuantity(cart);
+        }else{
+             quantity = await _.totalQuantity(products);
+        }
         this.setState({quantity, cart});
     }
     render() {
@@ -30,7 +35,7 @@ class App extends Component {
                     </div>
                     <Switch>
                         <Route exact path='/timeline' component={() => <Timeline getProducts={this.getProducts}/>} />
-                        <Route path='/cart' component={Cart} />
+                        <Route path='/cart' component={()=><Cart getProducts={this.getProducts}></Cart>} />
                     </Switch>
                 </div>
             </Router>
